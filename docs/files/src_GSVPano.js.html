@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>src/GSVPano.js - GSVPano</title>
+    <link rel="stylesheet" href="../assets/vendor/bootstrap/css/bootstrap-3.3.1.min.css">
+    <link rel="stylesheet" href="">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/custom.css">
+    <link rel="shortcut icon" type="image/png" href="../assets/favicon.png">
+</head>
+<body>
+  <nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a href="#" class="navbar-brand">
+            GSVPano
+        </a>
+      </div>
+      <p class="navbar-text">
+        API Docs for Version: <b>1.0.0</b>
+      </p>
+       <form class="navbar-form pull-right">
+        <input type="text" class="form-control" placeholder="Search for classes/modules..." data-obj='["classes/GSVPANO.PanoLoader", "modules/GSVPANO"]'>
+      </form>
+    </div>
+  </nav>
+<div class="container">
+  <div class="row">
+      <div class="col-xs-3">
+    <div>
+        <h3><b>APIs</b></h3>
+        <div id="sidebar">
+            <div>
+                <input class="form-control" type="search" placeholder="Search for Classes">
+            </div>
+            <ul id="main-nav" class="nav nav-tabs">
+                <li class="active"><a href="#classes" data-toggle="tab">Classes</a></li>
+                <li><a href="#modules" data-toggle="tab">Modules</a></li>
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane active" id="classes">
+                    <ul id="api-classes" class="nav nav-list">
+                            <li><a href="../classes/GSVPANO.PanoLoader.html">GSVPANO.PanoLoader</a></li>
+                    </ul>
+                </div>
+                <div class="tab-pane" id="modules">
+                    <ul id="api-modules" class="nav nav-list">
+                            <li><a href="../modules/GSVPANO.html">GSVPANO</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+      </div>
+      <div class="col-xs-9">
+              <form id="options-form" class="btn-group warning form-inline pull-right" data-toggle="buttons">
+                  <label for="api-show-inherited" class="btn btn-info active">
+                      <input type="checkbox" id="api-show-inherited" checked>
+                      Inherited
+                  </label>
+          
+                  <label for="api-show-protected" class="btn btn-info">
+                      <input type="checkbox" id="api-show-protected">
+                      Protected
+                  </label>
+          
+                  <label for="api-show-private" class="btn btn-info">
+                      <input type="checkbox" id="api-show-private">
+                      Private
+                  </label>
+                  <label for="api-show-deprecated" class="btn btn-info">
+                      <input type="checkbox" id="api-show-deprecated">
+                      Deprecated
+                  </label>
+              </form>          <div class="apidocs">
+              <div id="docs-main">
+                  <div class="content">
+                      <div class="page-header">
+                          <h1>src/GSVPano.js <small>File</small></h1>
+                      </div>
+                      
+                      <div class="file">
+                          <pre class="prettyprint linenums">
+                      // GSVPano.js
+                      // Copyright (c) 2014 Heganoo
+                      // https://github.com/heganoo/GSVPano
+                      
+                      /**
+                       * @module GSVPANO
+                       * @class GSVPANO.PanoLoader
+                       */
+                      var GSVPANO = {};
+                      
+                      /**
+                       * @constructor
+                       * @param {Object} parameters
+                       * @param {Number} parameters.zoom Zoom (default 1)
+                       */
+                      GSVPANO.PanoLoader = function(parameters) {
+                      
+                        &#x27;use strict&#x27;;
+                      
+                        var self = this,
+                          _parameters = parameters || {},
+                          _location,
+                          _zoom,
+                          _panoId,
+                          _panoClient = new google.maps.StreetViewService(),
+                          _count = 0,
+                          _total = 0,
+                          _canvas = document.createElement(&#x27;canvas&#x27;),
+                          _ctx = _canvas.getContext(&#x27;2d&#x27;),
+                          rotation = 0,
+                          pitch = 0,
+                          copyright = &#x27;&#x27;,
+                          onSizeChange = null,
+                          onPanoramaLoad = null;
+                      
+                        /**
+                         * Fires onProgress
+                         * @method setProgress
+                         * @param p
+                         * @private
+                         */
+                        var setProgress = function(p) {
+                          if (self.onProgress) {
+                            self.onProgress(p);
+                          }
+                        };
+                      
+                        /**
+                         * Fires onError
+                         * @method throwError
+                         * @param {String} message
+                         */
+                        this.throwError = function(message) {
+                          if (this.onError) {
+                            this.onError(message);
+                          } else {
+                            console.error(message);
+                          }
+                        };
+                      
+                        /**
+                         * @method adaptTextureToZoom
+                         */
+                        this.adaptTextureToZoom = function() {
+                      
+                          var w = 416 * Math.pow(2, _zoom),
+                            h = (416 * Math.pow(2, _zoom - 1));
+                          _canvas.width = w;
+                          _canvas.height = h;
+                          //    _ctx.translate( _canvas.width, 0 );
+                          //    _ctx.scale( -1, 1 );
+                        };
+                      
+                        /**
+                         * Fires onPanoramaLoad
+                         * @method composeFromTile
+                         * @param {Number} x
+                         * @param {Number} y
+                         * @param {Image} texture
+                         */
+                        this.composeFromTile = function(x, y, texture) {
+                      
+                          _ctx.drawImage(texture, x * 512, y * 512);
+                          _count++;
+                      
+                          var p = Math.round(_count * 100 / _total);
+                          setProgress(p);
+                      
+                          if (_count === _total) {
+                            this.canvas = _canvas;
+                            if (this.onPanoramaLoad) {
+                              this.onPanoramaLoad();
+                            }
+                          }
+                      
+                        };
+                      
+                        /**
+                         * @method composePanorama
+                         * @param {Hash} panoId
+                         */
+                        this.composePanorama = function(panoId) {
+                          setProgress(0);
+                          var
+                            w = (_zoom == 3) ? 7 : Math.pow(2, _zoom),
+                            h = Math.pow(2, _zoom - 1),
+                            self = this,
+                            url, x, y;
+                      
+                          _count = 0;
+                          _total = w * h;
+                      
+                          /**
+                           * Get the tiles.
+                           */
+                          for (y = 0; y &lt; h; y++) {
+                            for (x = 0; x &lt; w; x++) {
+                              //        url = &#x27;https://geo0.ggpht.com/cbk?cb_client=maps_sv.tactile&amp;authuser=0&amp;hl=en&amp;panoid=&#x27; + _panoId + &#x27;&amp;output=tile&amp;x=&#x27; + x + &#x27;&amp;y=&#x27; + y + &#x27;&amp;zoom=&#x27; + _zoom + &#x27;&amp;nbt&amp;fover=2&#x27;;
+                              //        url = &#x27;https://cbks2.google.com/cbk?cb_client=maps_sv.tactile&amp;authuser=0&amp;hl=en&amp;panoid=&#x27; + _panoId + &#x27;&amp;output=tile&amp;zoom=&#x27; + _zoom + &#x27;&amp;x=&#x27; + x + &#x27;&amp;y=&#x27; + y + &#x27;&amp;&#x27; + Date.now();
+                              url = &#x27;http://maps.google.com/cbk?output=tile&amp;panoid=&#x27; + _panoId + &#x27;&amp;zoom=&#x27; + _zoom + &#x27;&amp;x=&#x27; + x + &#x27;&amp;y=&#x27; + y + &#x27;&amp;&#x27; + Date.now();
+                              //(function(x, y) {
+                                var img = new Image();
+                                img.addEventListener(&#x27;load&#x27;, self.composeFromTile.bind(self, x, y, img));
+                                img.crossOrigin = &#x27;&#x27;;
+                                img.src = url;
+                              //})(x, y);
+                            }
+                          }
+                        };
+                      
+                        /**
+                         * Middle function for working with IDs.
+                         * @method loadData
+                         * @param {Google.Maps.Location} location
+                         */
+                        this.loadData = function(location) {
+                          var self = this;
+                          var url;
+                      
+                          url = &#x27;https://maps.google.com/cbk?output=json&amp;hl=x-local&amp;ll=&#x27; + location.lat() + &#x27;,&#x27; + location.lng() + &#x27;&amp;cb_client=maps_sv&amp;v=3&#x27;;
+                          url = &#x27;https://cbks0.google.com/cbk?cb_client=maps_sv.tactile&amp;authuser=0&amp;hl=en&amp;output=polygon&amp;it=1%3A1&amp;rank=closest&amp;ll=&#x27; + location.lat() + &#x27;,&#x27; + location.lng() + &#x27;&amp;radius=350&#x27;;
+                      
+                          var http_request = new XMLHttpRequest();
+                          http_request.open(&quot;GET&quot;, url, true);
+                          http_request.onreadystatechange = function() {
+                            if (http_request.readyState == 4 &amp;&amp; http_request.status == 200) {
+                              var data = JSON.parse(http_request.responseText);
+                              self.loadPano(location, data.result[0].id);
+                            }
+                          };
+                          http_request.send(null);
+                        };
+                      
+                      
+                        /**
+                         * Fires onPanoramaData, onNoPanoramaData
+                         * @method load
+                         * @param {Google.Maps.Location} location
+                         * @param {Hash} id
+                         */
+                        this.load = function(location, id) {
+                          var self = this;
+                          //    _panoClient.getPanoramaById( id, function (result, status) {
+                          _panoClient.getPanoramaByLocation(location, 50, function(result, status) {
+                            if (status === google.maps.StreetViewStatus.OK) {
+                              if (self.onPanoramaData) {
+                                self.onPanoramaData(result);
+                              }
+                              rotation = result.tiles.centerHeading * Math.PI / 180.0;
+                              pitch = result.tiles.originPitch;
+                              copyright = result.copyright;
+                              self.copyright = result.copyright;
+                              _panoId = result.location.pano;
+                              self.location = location;
+                              self.rotation = rotation;
+                              self.pitch = pitch;
+                              self.image_date = result.imageDate;
+                              self.id = _panoId;
+                              self.composePanorama();
+                            } else {
+                              if (self.onNoPanoramaData) {
+                                self.onNoPanoramaData(status);
+                              }
+                              self.throwError(&#x27;Could not retrieve panorama for the following reason: &#x27; + status);
+                            }
+                          });
+                      
+                        };
+                      
+                        /**
+                         * @method setZoom
+                         * @param {Number} z
+                         */
+                        this.setZoom = function(z) {
+                          _zoom = z;
+                          this.adaptTextureToZoom();
+                        };
+                      
+                        // Default zoom.
+                        this.setZoom(_parameters.zoom || 1);
+                      
+                      };
+                      
+                      global.GSVPANO = module.exports = GSVPANO;
+                          </pre>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
+<script src="../assets/vendor/jquery/jquery-1.11.2.min.js"></script>
+<script src="../assets/vendor/bootstrap/js/bootstrap-3.3.1.min.js"></script>
+<script src="../assets/vendor/bootstrap/js/bootstrap-typeahead.js"></script>
+
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script src="../assets/js/yuidoc-bootstrap.js"></script>
+<script>prettyPrint();</script>
+</body>
+</html>

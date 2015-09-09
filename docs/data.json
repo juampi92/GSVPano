@@ -1,0 +1,226 @@
+{
+    "project": {
+        "name": "GSVPano",
+        "description": "Google Street View Panorama Util",
+        "version": "1.0.0",
+        "url": "https://juampi92.github.io/GSVPano"
+    },
+    "files": {
+        "src/GSVPano.js": {
+            "name": "src/GSVPano.js",
+            "modules": {
+                "GSVPANO": 1
+            },
+            "classes": {
+                "GSVPANO.PanoLoader": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        }
+    },
+    "modules": {
+        "GSVPANO": {
+            "name": "GSVPANO",
+            "submodules": {},
+            "elements": {},
+            "classes": {
+                "GSVPANO.PanoLoader": 1
+            },
+            "fors": {},
+            "namespaces": {},
+            "tag": "module",
+            "file": "src/GSVPano.js",
+            "line": 5
+        }
+    },
+    "classes": {
+        "GSVPANO.PanoLoader": {
+            "name": "GSVPANO.PanoLoader",
+            "shortname": "GSVPANO.PanoLoader",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "GSVPANO",
+            "namespace": "",
+            "file": "src/GSVPano.js",
+            "line": 5
+        }
+    },
+    "elements": {},
+    "classitems": [
+        {
+            "file": "src/GSVPano.js",
+            "line": 11,
+            "is_constructor": 1,
+            "params": [
+                {
+                    "name": "parameters",
+                    "description": "",
+                    "type": "Object",
+                    "props": [
+                        {
+                            "name": "zoom",
+                            "description": "Zoom (default 1)",
+                            "type": "Number"
+                        }
+                    ]
+                }
+            ],
+            "class": "GSVPANO.PanoLoader",
+            "module": "GSVPANO"
+        },
+        {
+            "file": "src/GSVPano.js",
+            "line": 36,
+            "description": "Fires onProgress",
+            "itemtype": "method",
+            "name": "setProgress",
+            "params": [
+                {
+                    "name": "p",
+                    "description": ""
+                }
+            ],
+            "access": "private",
+            "tagname": "",
+            "class": "GSVPANO.PanoLoader",
+            "module": "GSVPANO"
+        },
+        {
+            "file": "src/GSVPano.js",
+            "line": 48,
+            "description": "Fires onError",
+            "itemtype": "method",
+            "name": "throwError",
+            "params": [
+                {
+                    "name": "message",
+                    "description": "",
+                    "type": "String"
+                }
+            ],
+            "class": "GSVPANO.PanoLoader",
+            "module": "GSVPANO"
+        },
+        {
+            "file": "src/GSVPano.js",
+            "line": 61,
+            "itemtype": "method",
+            "name": "adaptTextureToZoom",
+            "class": "GSVPANO.PanoLoader",
+            "module": "GSVPANO"
+        },
+        {
+            "file": "src/GSVPano.js",
+            "line": 74,
+            "description": "Fires onPanoramaLoad",
+            "itemtype": "method",
+            "name": "composeFromTile",
+            "params": [
+                {
+                    "name": "x",
+                    "description": "",
+                    "type": "Number"
+                },
+                {
+                    "name": "y",
+                    "description": "",
+                    "type": "Number"
+                },
+                {
+                    "name": "texture",
+                    "description": "",
+                    "type": "Image"
+                }
+            ],
+            "class": "GSVPANO.PanoLoader",
+            "module": "GSVPANO"
+        },
+        {
+            "file": "src/GSVPano.js",
+            "line": 98,
+            "itemtype": "method",
+            "name": "composePanorama",
+            "params": [
+                {
+                    "name": "panoId",
+                    "description": "",
+                    "type": "Hash"
+                }
+            ],
+            "class": "GSVPANO.PanoLoader",
+            "module": "GSVPANO"
+        },
+        {
+            "file": "src/GSVPano.js",
+            "line": 113,
+            "description": "Get the tiles.",
+            "class": "GSVPANO.PanoLoader",
+            "module": "GSVPANO"
+        },
+        {
+            "file": "src/GSVPano.js",
+            "line": 131,
+            "description": "Middle function for working with IDs.",
+            "itemtype": "method",
+            "name": "loadData",
+            "params": [
+                {
+                    "name": "location",
+                    "description": "",
+                    "type": "Google.Maps.Location"
+                }
+            ],
+            "class": "GSVPANO.PanoLoader",
+            "module": "GSVPANO"
+        },
+        {
+            "file": "src/GSVPano.js",
+            "line": 155,
+            "description": "Fires onPanoramaData, onNoPanoramaData",
+            "itemtype": "method",
+            "name": "load",
+            "params": [
+                {
+                    "name": "location",
+                    "description": "",
+                    "type": "Google.Maps.Location"
+                },
+                {
+                    "name": "id",
+                    "description": "",
+                    "type": "Hash"
+                }
+            ],
+            "class": "GSVPANO.PanoLoader",
+            "module": "GSVPANO"
+        },
+        {
+            "file": "src/GSVPano.js",
+            "line": 190,
+            "itemtype": "method",
+            "name": "setZoom",
+            "params": [
+                {
+                    "name": "z",
+                    "description": "",
+                    "type": "Number"
+                }
+            ],
+            "class": "GSVPANO.PanoLoader",
+            "module": "GSVPANO"
+        }
+    ],
+    "warnings": [
+        {
+            "message": "Missing item type",
+            "line": " src/GSVPano.js:11"
+        },
+        {
+            "message": "Missing item type\nGet the tiles.",
+            "line": " src/GSVPano.js:113"
+        }
+    ]
+}
