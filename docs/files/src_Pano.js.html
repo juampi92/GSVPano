@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>src/Pano.js - GSVPano</title>
+    <link rel="stylesheet" href="../assets/vendor/bootstrap/css/bootstrap-3.3.1.min.css">
+    <link rel="stylesheet" href="">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/custom.css">
+    <link rel="shortcut icon" type="image/png" href="../assets/favicon.png">
+</head>
+<body>
+  <nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a href="#" class="navbar-brand">
+            GSVPano
+        </a>
+      </div>
+      <p class="navbar-text">
+        API Docs for Version: <b>1.0.0</b>
+      </p>
+       <form class="navbar-form pull-right">
+        <input type="text" class="form-control" placeholder="Search for classes/modules..." data-obj='["classes/EventEmitter", "classes/Pano", "classes/PanoLoader", "modules/EventEmitter", "modules/GSVPANO"]'>
+      </form>
+    </div>
+  </nav>
+<div class="container">
+  <div class="row">
+      <div class="col-xs-3">
+    <div>
+        <h3><b>APIs</b></h3>
+        <div id="sidebar">
+            <div>
+                <input class="form-control" type="search" placeholder="Search for Classes">
+            </div>
+            <ul id="main-nav" class="nav nav-tabs">
+                <li class="active"><a href="#classes" data-toggle="tab">Classes</a></li>
+                <li><a href="#modules" data-toggle="tab">Modules</a></li>
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane active" id="classes">
+                    <ul id="api-classes" class="nav nav-list">
+                            <li><a href="../classes/EventEmitter.html">EventEmitter</a></li>
+                            <li><a href="../classes/Pano.html">Pano</a></li>
+                            <li><a href="../classes/PanoLoader.html">PanoLoader</a></li>
+                    </ul>
+                </div>
+                <div class="tab-pane" id="modules">
+                    <ul id="api-modules" class="nav nav-list">
+                            <li><a href="../modules/EventEmitter.html">EventEmitter</a></li>
+                            <li><a href="../modules/GSVPANO.html">GSVPANO</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+      </div>
+      <div class="col-xs-9">
+              <form id="options-form" class="btn-group warning form-inline pull-right" data-toggle="buttons">
+                  <label for="api-show-inherited" class="btn btn-info active">
+                      <input type="checkbox" id="api-show-inherited" checked>
+                      Inherited
+                  </label>
+          
+                  <label for="api-show-protected" class="btn btn-info">
+                      <input type="checkbox" id="api-show-protected">
+                      Protected
+                  </label>
+          
+                  <label for="api-show-private" class="btn btn-info">
+                      <input type="checkbox" id="api-show-private">
+                      Private
+                  </label>
+                  <label for="api-show-deprecated" class="btn btn-info">
+                      <input type="checkbox" id="api-show-deprecated">
+                      Deprecated
+                  </label>
+              </form>          <div class="apidocs">
+              <div id="docs-main">
+                  <div class="content">
+                      <div class="page-header">
+                          <h1>src/Pano.js <small>File</small></h1>
+                      </div>
+                      
+                      <div class="file">
+                          <pre class="prettyprint linenums">
+                      /**
+                       * @module GSVPANO
+                       */
+                      
+                      var eventEmitter = require(&#x27;event-emitter&#x27;);
+                      eventEmitter.alloff = require(&#x27;event-emitter/all-off&#x27;);
+                      
+                      /**
+                       * One single Panoramic item
+                       * @class Pano
+                       * @author juampi92
+                       * @extends {EventEmitter}
+                       * @constructor
+                       * @param  {Object} params
+                       * @param {Hash} params.panoId
+                       * @param {Number} params.rotation (on degrees)
+                       * @param {Number} params.pitch
+                       * @param {Google.Maps.LatLng} params.location
+                       * @param {String} params.copyright
+                       * @param {Date} params.imageDate
+                       * @example
+                       *         var pano = new GSVPANO.Pano({
+                       *           id: panoId,
+                       *           rotation: rotation,
+                       *           pitch: pitch,
+                       *           location: location,
+                       *           imageDate: imageDate,
+                       *           copyright: copyright,
+                       *           zoom: zoom
+                       *         });
+                       */
+                      var Pano = function(params) {
+                        eventEmitter(this);
+                      
+                        var _params = params || {};
+                      
+                        /**
+                         * @attribute id
+                         * @type {Hash}
+                         */
+                        this.id = params.id;
+                        /**
+                         * @attribute rotation
+                         * @type {Number}
+                         */
+                      
+                        this.setRotation(params.rotation || 0);
+                        /**
+                         * @attribute pitch
+                         * @type {Number}
+                         */
+                        this.pitch = params.pitch;
+                        /**
+                         * @attribute location
+                         * @type {Google.Maps.LatLng}
+                         */
+                        this.location = params.location;
+                        /**
+                         * @attribute imageDate
+                         * @type {Date}
+                         */
+                        this.imageDate = params.imageDate;
+                        /**
+                         * @attribute copyright
+                         * @type {String}
+                         */
+                        this.copyright = params.copyright;
+                        /**
+                         * @attribute zoom
+                         * @type {Number}
+                         */
+                        this.zoom = params.zoom;
+                        /**
+                         * @attribute canvas
+                         * @type {Canvas Element}
+                         * @default null
+                         */
+                        this.canvas = null;
+                        /**
+                         * @attribute _ctx
+                         * @type {Canvas 2d Context}
+                         * @default null
+                         */
+                        this._ctx = null;
+                        /**
+                         * @attribute _loaded
+                         * @type {Boolean}
+                         */
+                        this._loaded = false;
+                      };
+                      
+                      /**
+                       * Saves rotation. Input in degrees
+                       * @method setRotation
+                       * @param  {Number} deg
+                       * @chainable
+                       */
+                      Pano.prototype.setRotation = function(deg) {
+                        this.rotation = deg * Math.PI / 180.0;
+                        return this;
+                      };
+                      
+                      /**
+                       * @method initCanvas
+                       * @private
+                       */
+                      Pano.prototype.initCanvas = function() {
+                        this.canvas = document.createElement(&#x27;canvas&#x27;);
+                        this._ctx = this.canvas.getContext(&#x27;2d&#x27;);
+                      
+                        var w = 416 * Math.pow(2, this.zoom),
+                          h = (416 * Math.pow(2, this.zoom - 1));
+                        this.canvas.width = w;
+                        this.canvas.height = h;
+                        // this._ctx.translate( this.canvas.width, 0 );
+                        // this._ctx.scale( -1, 1 );
+                      };
+                      
+                      /**
+                       * Progress notification
+                       * @event progress
+                       * @param  {Number} p
+                       * @chainable
+                       * @example
+                       *         pano.on(&#x27;progress&#x27;, function(p) {
+                       *           console.log(&#x27;Pano download progress: &#x27; + p + &#x27;%&#x27;);
+                       *         });
+                       */
+                      /**
+                       * Complete notification
+                       * @event complete
+                       * @param  {Pano} pano
+                       * @chainable
+                       * @example
+                       *         pano.on(&#x27;complete&#x27;, function(p) {
+                       *           console.log(&#x27;Pano completed progress: &#x27; + p + &#x27;%&#x27;);
+                       *         });
+                       */
+                      /**
+                       * Will fire &#x27;callback&#x27; when completed
+                       * @method compose
+                       * @param {Hash} panoId
+                       * @chainable
+                       * @example
+                       *         var pano = new Pano(...);
+                       *         pano.compose();
+                       */
+                      Pano.prototype.compose = function() {
+                        this.initCanvas();
+                      
+                        var w = (this.zoom == 3) ? 7 : Math.pow(2, this.zoom),
+                          h = Math.pow(2, this.zoom - 1),
+                          url, x, y;
+                      
+                        this._count = 0;
+                        this._total = w * h;
+                      
+                        // Get the tiles
+                        for (y = 0; y &lt; h; y++) {
+                          for (x = 0; x &lt; w; x++) {
+                            this.createImage(x, y);
+                          }
+                        }
+                        return this;
+                      };
+                      
+                      /**
+                       * Creates an Image with the appropiate load callback
+                       * @method createImage
+                       * @param  {Number} x
+                       * @param  {Number} y
+                       * @private
+                       */
+                      Pano.prototype.createImage = function(x, y) {
+                        var url = GSVPANO._url + &#x27;&amp;panoid=&#x27; + this.id + &#x27;&amp;zoom=&#x27; + this.zoom + &#x27;&amp;x=&#x27; + x + &#x27;&amp;y=&#x27; + y + &#x27;&amp;&#x27; + Date.now(),
+                          img = new Image();
+                      
+                        img.addEventListener(&#x27;load&#x27;, this.composeFromTile.bind(this, x, y, img));
+                        img.crossOrigin = &#x27;&#x27;;
+                        img.src = url;
+                      };
+                      
+                      /**
+                       * @method composeFromTile
+                       * @param {Number} x
+                       * @param {Number} y
+                       * @param {Image} texture
+                       * @private
+                       */
+                      Pano.prototype.composeFromTile = function(x, y, texture) {
+                        // Complete this section of the frame
+                        this._ctx.drawImage(texture, x * 512, y * 512);
+                        this._count++;
+                      
+                        var p = Math.round(this._count * 100 / this._total);
+                        this.emit(&#x27;progress&#x27;, p);
+                      
+                        // If finished
+                        if (this._count === this._total) {
+                          // Done loading
+                          this._loaded = true;
+                          // Trigger complete event
+                          this.emit(&#x27;complete&#x27;, this);
+                          // Remove all events
+                          eventEmitter.alloff(this);
+                        }
+                      };
+                      
+                      module.exports = Pano;
+                          </pre>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
+<script src="../assets/vendor/jquery/jquery-1.11.2.min.js"></script>
+<script src="../assets/vendor/bootstrap/js/bootstrap-3.3.1.min.js"></script>
+<script src="../assets/vendor/bootstrap/js/bootstrap-typeahead.js"></script>
+
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script src="../assets/js/yuidoc-bootstrap.js"></script>
+<script>prettyPrint();</script>
+</body>
+</html>

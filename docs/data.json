@@ -6,37 +6,87 @@
         "url": "https://juampi92.github.io/GSVPano"
     },
     "files": {
+        "src/EventEmitter.js": {
+            "name": "src/EventEmitter.js",
+            "modules": {
+                "EventEmitter": 1
+            },
+            "classes": {
+                "EventEmitter": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
         "src/GSVPano.js": {
             "name": "src/GSVPano.js",
             "modules": {
                 "GSVPANO": 1
             },
             "classes": {
-                "GSVPANO.PanoLoader": 1
+                "PanoLoader": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "src/Pano.js": {
+            "name": "src/Pano.js",
+            "modules": {},
+            "classes": {
+                "Pano": 1
             },
             "fors": {},
             "namespaces": {}
         }
     },
     "modules": {
+        "EventEmitter": {
+            "name": "EventEmitter",
+            "submodules": {},
+            "elements": {},
+            "classes": {
+                "EventEmitter": 1
+            },
+            "fors": {},
+            "namespaces": {},
+            "tag": "module",
+            "file": "src/EventEmitter.js",
+            "line": 1,
+            "description": "https://www.npmjs.com/package/event-emitter"
+        },
         "GSVPANO": {
             "name": "GSVPANO",
             "submodules": {},
             "elements": {},
             "classes": {
-                "GSVPANO.PanoLoader": 1
+                "PanoLoader": 1,
+                "Pano": 1
             },
             "fors": {},
             "namespaces": {},
             "tag": "module",
-            "file": "src/GSVPano.js",
-            "line": 5
+            "file": "src/Pano.js",
+            "line": 8,
+            "author": "juampi92"
         }
     },
     "classes": {
-        "GSVPANO.PanoLoader": {
-            "name": "GSVPANO.PanoLoader",
-            "shortname": "GSVPANO.PanoLoader",
+        "EventEmitter": {
+            "name": "EventEmitter",
+            "shortname": "EventEmitter",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "EventEmitter",
+            "namespace": "",
+            "file": "src/EventEmitter.js",
+            "line": 1,
+            "description": "https://www.npmjs.com/package/event-emitter"
+        },
+        "PanoLoader": {
+            "name": "PanoLoader",
+            "shortname": "PanoLoader",
             "classitems": [],
             "plugins": [],
             "extensions": [],
@@ -45,14 +95,8 @@
             "module": "GSVPANO",
             "namespace": "",
             "file": "src/GSVPano.js",
-            "line": 5
-        }
-    },
-    "elements": {},
-    "classitems": [
-        {
-            "file": "src/GSVPano.js",
-            "line": 11,
+            "line": 39,
+            "extends": "{EventEmitter}",
             "is_constructor": 1,
             "params": [
                 {
@@ -68,32 +112,218 @@
                     ]
                 }
             ],
-            "class": "GSVPANO.PanoLoader",
-            "module": "GSVPANO"
+            "example": [
+                "\n      var loader = GSVPANO.PanoLoader({ zoom: 3 });"
+            ]
         },
-        {
-            "file": "src/GSVPano.js",
-            "line": 36,
-            "description": "Fires onProgress",
-            "itemtype": "method",
-            "name": "setProgress",
+        "Pano": {
+            "name": "Pano",
+            "shortname": "Pano",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "GSVPANO",
+            "namespace": "",
+            "file": "src/Pano.js",
+            "line": 8,
+            "description": "One single Panoramic item",
+            "author": "juampi92",
+            "extends": "{EventEmitter}",
+            "is_constructor": 1,
             "params": [
                 {
-                    "name": "p",
-                    "description": ""
+                    "name": "params",
+                    "description": "",
+                    "type": "Object",
+                    "props": [
+                        {
+                            "name": "panoId",
+                            "description": "",
+                            "type": "Hash"
+                        },
+                        {
+                            "name": "rotation",
+                            "description": "(on degrees)",
+                            "type": "Number"
+                        },
+                        {
+                            "name": "pitch",
+                            "description": "",
+                            "type": "Number"
+                        },
+                        {
+                            "name": "location",
+                            "description": "",
+                            "type": "Google.Maps.LatLng"
+                        },
+                        {
+                            "name": "copyright",
+                            "description": "",
+                            "type": "String"
+                        },
+                        {
+                            "name": "imageDate",
+                            "description": "",
+                            "type": "Date"
+                        }
+                    ]
+                }
+            ],
+            "example": [
+                "\n        var pano = new GSVPANO.Pano({\n          id: panoId,\n          rotation: rotation,\n          pitch: pitch,\n          location: location,\n          imageDate: imageDate,\n          copyright: copyright,\n          zoom: zoom\n        });"
+            ]
+        }
+    },
+    "elements": {},
+    "classitems": [
+        {
+            "file": "src/EventEmitter.js",
+            "line": 6,
+            "description": "Catches the event emission",
+            "itemtype": "method",
+            "name": "on",
+            "params": [
+                {
+                    "name": "eventName",
+                    "description": "",
+                    "type": "String"
+                },
+                {
+                    "name": "callback",
+                    "description": "",
+                    "type": "Function"
+                }
+            ],
+            "chainable": 1,
+            "class": "EventEmitter",
+            "module": "EventEmitter"
+        },
+        {
+            "file": "src/EventEmitter.js",
+            "line": 13,
+            "description": "Fires the event for everyone to catch",
+            "itemtype": "method",
+            "name": "emit",
+            "params": [
+                {
+                    "name": "eventName",
+                    "description": "",
+                    "type": "String"
+                },
+                {
+                    "name": "params",
+                    "description": "Parameters to be recieved when subscribed",
+                    "type": "Amy"
                 }
             ],
             "access": "private",
             "tagname": "",
-            "class": "GSVPANO.PanoLoader",
+            "class": "EventEmitter",
+            "module": "EventEmitter"
+        },
+        {
+            "file": "src/GSVPano.js",
+            "line": 15,
+            "description": "Fetch URL. Use this parameter in case the URL stops working. At\nthe end of this string, the parameters &panoid, &x, &y, &zoom \nand the current timestamp are appended.",
+            "itemtype": "property",
+            "name": "GSVPANO._url",
+            "type": "{String}",
+            "default": "'http://maps.google.com/cbk?output=tile'",
+            "class": "PanoLoader",
             "module": "GSVPANO"
         },
         {
             "file": "src/GSVPano.js",
-            "line": 48,
-            "description": "Fires onError",
-            "itemtype": "method",
-            "name": "throwError",
+            "line": 28,
+            "description": "Data Fetch URL. Use this parameter in case the URL stops working.\nAt the end of this string, the parameter &ll is appended.",
+            "itemtype": "property",
+            "name": "GSVPANO._data_url",
+            "type": "{String}",
+            "default": "'https://cbks0.google.com/cbk?cb_client=maps_sv.tactile&authuser=0&hl=en&output=polygon&it=1%3A1&rank=closest&radius=350'",
+            "class": "PanoLoader",
+            "module": "GSVPANO"
+        },
+        {
+            "file": "src/GSVPano.js",
+            "line": 67,
+            "itemtype": "event",
+            "name": "panorama.data",
+            "params": [
+                {
+                    "name": "pano",
+                    "description": "",
+                    "type": "Pano"
+                }
+            ],
+            "example": [
+                "\n    loader.on('panorama.data', function(pano){\n      console.log('Pano ' + pano.id + ' added');\n    });"
+            ],
+            "class": "PanoLoader",
+            "module": "GSVPANO"
+        },
+        {
+            "file": "src/GSVPano.js",
+            "line": 76,
+            "itemtype": "event",
+            "name": "panorama.nodata",
+            "params": [
+                {
+                    "name": "status",
+                    "description": "",
+                    "type": "Google.Maps.StreetViewStatus"
+                }
+            ],
+            "class": "PanoLoader",
+            "module": "GSVPANO"
+        },
+        {
+            "file": "src/GSVPano.js",
+            "line": 81,
+            "itemtype": "event",
+            "name": "progress",
+            "params": [
+                {
+                    "name": "p",
+                    "description": "",
+                    "type": "Number"
+                },
+                {
+                    "name": "pano",
+                    "description": "",
+                    "type": "Pano"
+                }
+            ],
+            "example": [
+                "\n        loader.on('progress', function(p, pano) {\n          console.log('Pano progress: ' + p + '%');\n        });"
+            ],
+            "class": "PanoLoader",
+            "module": "GSVPANO"
+        },
+        {
+            "file": "src/GSVPano.js",
+            "line": 93,
+            "itemtype": "event",
+            "name": "panorama.load",
+            "params": [
+                {
+                    "name": "pano",
+                    "description": "",
+                    "type": "Pano"
+                }
+            ],
+            "example": [
+                "\n    loader.on('panorama.load', function(pano){\n      $container.append(pano.canvas);\n    });"
+            ],
+            "class": "PanoLoader",
+            "module": "GSVPANO"
+        },
+        {
+            "file": "src/GSVPano.js",
+            "line": 108,
+            "itemtype": "event",
+            "name": "error",
             "params": [
                 {
                     "name": "message",
@@ -101,21 +331,275 @@
                     "type": "String"
                 }
             ],
-            "class": "GSVPANO.PanoLoader",
+            "example": [
+                "\n    loader.on('error', function(message){\n      console.log(message)\n    });"
+            ],
+            "class": "PanoLoader",
             "module": "GSVPANO"
         },
         {
             "file": "src/GSVPano.js",
-            "line": 61,
+            "line": 120,
+            "description": "Middle function for working with IDs.",
             "itemtype": "method",
-            "name": "adaptTextureToZoom",
-            "class": "GSVPANO.PanoLoader",
+            "name": "loadData",
+            "params": [
+                {
+                    "name": "location",
+                    "description": "",
+                    "type": "Google.Maps.Location"
+                }
+            ],
+            "deprecated": true,
+            "deprecationMessage": "Disabled right now",
+            "class": "PanoLoader",
             "module": "GSVPANO"
         },
         {
             "file": "src/GSVPano.js",
-            "line": 74,
-            "description": "Fires onPanoramaLoad",
+            "line": 144,
+            "description": "Fires panorama.data, panorama.nodata",
+            "itemtype": "method",
+            "name": "load",
+            "params": [
+                {
+                    "name": "location",
+                    "description": "",
+                    "type": "Google.Maps.Location"
+                },
+                {
+                    "name": "callback",
+                    "description": "",
+                    "type": "Function"
+                }
+            ],
+            "example": [
+                "\n        // Let the panorama.load event handle it's load\n        loader.load(new google.maps.LatLng(lat, lng));",
+                "\n        // Also handle the load individually\n        loader.load(new google.maps.LatLng(lat, lng), function(pano){\n          // This individual load has been completed\n          container.append(pano.canvas);\n        });"
+            ],
+            "class": "PanoLoader",
+            "module": "GSVPANO"
+        },
+        {
+            "file": "src/GSVPano.js",
+            "line": 186,
+            "itemtype": "method",
+            "name": "setZoom",
+            "params": [
+                {
+                    "name": "z",
+                    "description": "",
+                    "type": "Number"
+                }
+            ],
+            "class": "PanoLoader",
+            "module": "GSVPANO"
+        },
+        {
+            "file": "src/Pano.js",
+            "line": 37,
+            "itemtype": "attribute",
+            "name": "id",
+            "type": "{Hash}",
+            "class": "Pano",
+            "module": "GSVPANO"
+        },
+        {
+            "file": "src/Pano.js",
+            "line": 42,
+            "itemtype": "attribute",
+            "name": "rotation",
+            "type": "{Number}",
+            "class": "Pano",
+            "module": "GSVPANO"
+        },
+        {
+            "file": "src/Pano.js",
+            "line": 48,
+            "itemtype": "attribute",
+            "name": "pitch",
+            "type": "{Number}",
+            "class": "Pano",
+            "module": "GSVPANO"
+        },
+        {
+            "file": "src/Pano.js",
+            "line": 53,
+            "itemtype": "attribute",
+            "name": "location",
+            "type": "{Google.Maps.LatLng}",
+            "class": "Pano",
+            "module": "GSVPANO"
+        },
+        {
+            "file": "src/Pano.js",
+            "line": 58,
+            "itemtype": "attribute",
+            "name": "imageDate",
+            "type": "{Date}",
+            "class": "Pano",
+            "module": "GSVPANO"
+        },
+        {
+            "file": "src/Pano.js",
+            "line": 63,
+            "itemtype": "attribute",
+            "name": "copyright",
+            "type": "{String}",
+            "class": "Pano",
+            "module": "GSVPANO"
+        },
+        {
+            "file": "src/Pano.js",
+            "line": 68,
+            "itemtype": "attribute",
+            "name": "zoom",
+            "type": "{Number}",
+            "class": "Pano",
+            "module": "GSVPANO"
+        },
+        {
+            "file": "src/Pano.js",
+            "line": 73,
+            "itemtype": "attribute",
+            "name": "canvas",
+            "type": "{Canvas Element}",
+            "default": "null",
+            "class": "Pano",
+            "module": "GSVPANO"
+        },
+        {
+            "file": "src/Pano.js",
+            "line": 79,
+            "itemtype": "attribute",
+            "name": "_ctx",
+            "type": "{Canvas 2d Context}",
+            "default": "null",
+            "class": "Pano",
+            "module": "GSVPANO"
+        },
+        {
+            "file": "src/Pano.js",
+            "line": 85,
+            "itemtype": "attribute",
+            "name": "_loaded",
+            "type": "{Boolean}",
+            "class": "Pano",
+            "module": "GSVPANO"
+        },
+        {
+            "file": "src/Pano.js",
+            "line": 92,
+            "description": "Saves rotation. Input in degrees",
+            "itemtype": "method",
+            "name": "setRotation",
+            "params": [
+                {
+                    "name": "deg",
+                    "description": "",
+                    "type": "Number"
+                }
+            ],
+            "chainable": 1,
+            "class": "Pano",
+            "module": "GSVPANO"
+        },
+        {
+            "file": "src/Pano.js",
+            "line": 103,
+            "itemtype": "method",
+            "name": "initCanvas",
+            "access": "private",
+            "tagname": "",
+            "class": "Pano",
+            "module": "GSVPANO"
+        },
+        {
+            "file": "src/Pano.js",
+            "line": 119,
+            "description": "Progress notification",
+            "itemtype": "event",
+            "name": "progress",
+            "params": [
+                {
+                    "name": "p",
+                    "description": "",
+                    "type": "Number"
+                }
+            ],
+            "chainable": 1,
+            "example": [
+                "\n        pano.on('progress', function(p) {\n          console.log('Pano download progress: ' + p + '%');\n        });"
+            ],
+            "class": "Pano",
+            "module": "GSVPANO"
+        },
+        {
+            "file": "src/Pano.js",
+            "line": 129,
+            "description": "Complete notification",
+            "itemtype": "event",
+            "name": "complete",
+            "params": [
+                {
+                    "name": "pano",
+                    "description": "",
+                    "type": "Pano"
+                }
+            ],
+            "chainable": 1,
+            "example": [
+                "\n        pano.on('complete', function(p) {\n          console.log('Pano completed progress: ' + p + '%');\n        });"
+            ],
+            "class": "Pano",
+            "module": "GSVPANO"
+        },
+        {
+            "file": "src/Pano.js",
+            "line": 139,
+            "description": "Will fire 'callback' when completed",
+            "itemtype": "method",
+            "name": "compose",
+            "params": [
+                {
+                    "name": "panoId",
+                    "description": "",
+                    "type": "Hash"
+                }
+            ],
+            "chainable": 1,
+            "example": [
+                "\n        var pano = new Pano(...);\n        pano.compose();"
+            ],
+            "class": "Pano",
+            "module": "GSVPANO"
+        },
+        {
+            "file": "src/Pano.js",
+            "line": 167,
+            "description": "Creates an Image with the appropiate load callback",
+            "itemtype": "method",
+            "name": "createImage",
+            "params": [
+                {
+                    "name": "x",
+                    "description": "",
+                    "type": "Number"
+                },
+                {
+                    "name": "y",
+                    "description": "",
+                    "type": "Number"
+                }
+            ],
+            "access": "private",
+            "tagname": "",
+            "class": "Pano",
+            "module": "GSVPANO"
+        },
+        {
+            "file": "src/Pano.js",
+            "line": 183,
             "itemtype": "method",
             "name": "composeFromTile",
             "params": [
@@ -135,92 +619,11 @@
                     "type": "Image"
                 }
             ],
-            "class": "GSVPANO.PanoLoader",
-            "module": "GSVPANO"
-        },
-        {
-            "file": "src/GSVPano.js",
-            "line": 98,
-            "itemtype": "method",
-            "name": "composePanorama",
-            "params": [
-                {
-                    "name": "panoId",
-                    "description": "",
-                    "type": "Hash"
-                }
-            ],
-            "class": "GSVPANO.PanoLoader",
-            "module": "GSVPANO"
-        },
-        {
-            "file": "src/GSVPano.js",
-            "line": 113,
-            "description": "Get the tiles.",
-            "class": "GSVPANO.PanoLoader",
-            "module": "GSVPANO"
-        },
-        {
-            "file": "src/GSVPano.js",
-            "line": 131,
-            "description": "Middle function for working with IDs.",
-            "itemtype": "method",
-            "name": "loadData",
-            "params": [
-                {
-                    "name": "location",
-                    "description": "",
-                    "type": "Google.Maps.Location"
-                }
-            ],
-            "class": "GSVPANO.PanoLoader",
-            "module": "GSVPANO"
-        },
-        {
-            "file": "src/GSVPano.js",
-            "line": 155,
-            "description": "Fires onPanoramaData, onNoPanoramaData",
-            "itemtype": "method",
-            "name": "load",
-            "params": [
-                {
-                    "name": "location",
-                    "description": "",
-                    "type": "Google.Maps.Location"
-                },
-                {
-                    "name": "id",
-                    "description": "",
-                    "type": "Hash"
-                }
-            ],
-            "class": "GSVPANO.PanoLoader",
-            "module": "GSVPANO"
-        },
-        {
-            "file": "src/GSVPano.js",
-            "line": 190,
-            "itemtype": "method",
-            "name": "setZoom",
-            "params": [
-                {
-                    "name": "z",
-                    "description": "",
-                    "type": "Number"
-                }
-            ],
-            "class": "GSVPANO.PanoLoader",
+            "access": "private",
+            "tagname": "",
+            "class": "Pano",
             "module": "GSVPANO"
         }
     ],
-    "warnings": [
-        {
-            "message": "Missing item type",
-            "line": " src/GSVPano.js:11"
-        },
-        {
-            "message": "Missing item type\nGet the tiles.",
-            "line": " src/GSVPano.js:113"
-        }
-    ]
+    "warnings": []
 }
