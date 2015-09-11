@@ -162,6 +162,7 @@
                       
                         /**
                          * @event panorama.nodata
+                         * @param {Google.Maps.LatLng} location
                          * @param {Google.Maps.StreetViewStatus} status
                          */
                       
@@ -264,7 +265,7 @@
                               pano.compose();
                               self.emit(&#x27;panorama.data&#x27;, pano);
                             } else {
-                              self.emit(&#x27;panorama.nodata&#x27;, status);
+                              self.emit(&#x27;panorama.nodata&#x27;, location, status);
                               throwError(&#x27;Could not retrieve panorama for the following reason: &#x27; + status);
                             }
                           });

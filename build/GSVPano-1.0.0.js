@@ -452,6 +452,7 @@ GSVPANO.PanoLoader = function(parameters) {
 
   /**
    * @event panorama.nodata
+   * @param {Google.Maps.LatLng} location
    * @param {Google.Maps.StreetViewStatus} status
    */
 
@@ -554,7 +555,7 @@ GSVPANO.PanoLoader = function(parameters) {
         pano.compose();
         self.emit('panorama.data', pano);
       } else {
-        self.emit('panorama.nodata', status);
+        self.emit('panorama.nodata', location, status);
         throwError('Could not retrieve panorama for the following reason: ' + status);
       }
     });

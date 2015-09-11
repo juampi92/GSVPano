@@ -270,6 +270,11 @@
             "name": "panorama.nodata",
             "params": [
                 {
+                    "name": "location",
+                    "description": "",
+                    "type": "Google.Maps.LatLng"
+                },
+                {
                     "name": "status",
                     "description": "",
                     "type": "Google.Maps.StreetViewStatus"
@@ -280,7 +285,7 @@
         },
         {
             "file": "src/GSVPano.js",
-            "line": 81,
+            "line": 82,
             "itemtype": "event",
             "name": "progress",
             "params": [
@@ -303,7 +308,7 @@
         },
         {
             "file": "src/GSVPano.js",
-            "line": 93,
+            "line": 94,
             "itemtype": "event",
             "name": "panorama.load",
             "params": [
@@ -321,7 +326,7 @@
         },
         {
             "file": "src/GSVPano.js",
-            "line": 108,
+            "line": 109,
             "itemtype": "event",
             "name": "error",
             "params": [
@@ -339,7 +344,7 @@
         },
         {
             "file": "src/GSVPano.js",
-            "line": 120,
+            "line": 121,
             "description": "Middle function for working with IDs.",
             "itemtype": "method",
             "name": "loadData",
@@ -357,7 +362,7 @@
         },
         {
             "file": "src/GSVPano.js",
-            "line": 144,
+            "line": 145,
             "description": "Fires panorama.data, panorama.nodata",
             "itemtype": "method",
             "name": "load",
@@ -382,7 +387,7 @@
         },
         {
             "file": "src/GSVPano.js",
-            "line": 186,
+            "line": 187,
             "itemtype": "method",
             "name": "setZoom",
             "params": [
