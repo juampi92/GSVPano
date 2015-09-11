@@ -457,7 +457,7 @@ GSVPANO.PanoLoader = function(parameters) {
    */
 
   /**
-   * @event progress
+   * @event panorama.progress
    * @param {Number} p
    * @param {Pano} pano
    * @example
@@ -466,7 +466,7 @@ GSVPANO.PanoLoader = function(parameters) {
    *         });
    */
   var setProgress = function(pano, p) {
-    self.emit('progress', p, pano);
+    self.emit('panorama.progress', p, pano);
   };
   /**
    * @event panorama.load
