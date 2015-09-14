@@ -326,7 +326,7 @@
         },
         {
             "file": "src/GSVPano.js",
-            "line": 109,
+            "line": 103,
             "itemtype": "event",
             "name": "error",
             "params": [
@@ -344,7 +344,7 @@
         },
         {
             "file": "src/GSVPano.js",
-            "line": 121,
+            "line": 115,
             "description": "Middle function for working with IDs.",
             "itemtype": "method",
             "name": "loadData",
@@ -362,7 +362,7 @@
         },
         {
             "file": "src/GSVPano.js",
-            "line": 145,
+            "line": 139,
             "description": "Fires panorama.data, panorama.nodata",
             "itemtype": "method",
             "name": "load",
@@ -387,7 +387,7 @@
         },
         {
             "file": "src/GSVPano.js",
-            "line": 187,
+            "line": 185,
             "itemtype": "method",
             "name": "setZoom",
             "params": [
@@ -420,7 +420,7 @@
         },
         {
             "file": "src/Pano.js",
-            "line": 48,
+            "line": 47,
             "itemtype": "attribute",
             "name": "pitch",
             "type": "{Number}",
@@ -429,7 +429,7 @@
         },
         {
             "file": "src/Pano.js",
-            "line": 53,
+            "line": 52,
             "itemtype": "attribute",
             "name": "location",
             "type": "{Google.Maps.LatLng}",
@@ -438,7 +438,7 @@
         },
         {
             "file": "src/Pano.js",
-            "line": 58,
+            "line": 57,
             "itemtype": "attribute",
             "name": "imageDate",
             "type": "{Date}",
@@ -447,7 +447,7 @@
         },
         {
             "file": "src/Pano.js",
-            "line": 63,
+            "line": 62,
             "itemtype": "attribute",
             "name": "copyright",
             "type": "{String}",
@@ -456,7 +456,7 @@
         },
         {
             "file": "src/Pano.js",
-            "line": 68,
+            "line": 67,
             "itemtype": "attribute",
             "name": "zoom",
             "type": "{Number}",
@@ -465,7 +465,7 @@
         },
         {
             "file": "src/Pano.js",
-            "line": 73,
+            "line": 72,
             "itemtype": "attribute",
             "name": "canvas",
             "type": "{Canvas Element}",
@@ -475,7 +475,7 @@
         },
         {
             "file": "src/Pano.js",
-            "line": 79,
+            "line": 78,
             "itemtype": "attribute",
             "name": "_ctx",
             "type": "{Canvas 2d Context}",
@@ -485,7 +485,7 @@
         },
         {
             "file": "src/Pano.js",
-            "line": 85,
+            "line": 84,
             "itemtype": "attribute",
             "name": "_loaded",
             "type": "{Boolean}",
@@ -494,7 +494,7 @@
         },
         {
             "file": "src/Pano.js",
-            "line": 92,
+            "line": 91,
             "description": "Saves rotation. Input in degrees",
             "itemtype": "method",
             "name": "setRotation",
@@ -511,7 +511,7 @@
         },
         {
             "file": "src/Pano.js",
-            "line": 103,
+            "line": 102,
             "itemtype": "method",
             "name": "initCanvas",
             "access": "private",
@@ -521,7 +521,7 @@
         },
         {
             "file": "src/Pano.js",
-            "line": 119,
+            "line": 116,
             "description": "Progress notification",
             "itemtype": "event",
             "name": "progress",
@@ -541,7 +541,7 @@
         },
         {
             "file": "src/Pano.js",
-            "line": 129,
+            "line": 126,
             "description": "Complete notification",
             "itemtype": "event",
             "name": "complete",
@@ -561,7 +561,7 @@
         },
         {
             "file": "src/Pano.js",
-            "line": 139,
+            "line": 136,
             "description": "Will fire 'callback' when completed",
             "itemtype": "method",
             "name": "compose",
@@ -581,7 +581,7 @@
         },
         {
             "file": "src/Pano.js",
-            "line": 167,
+            "line": 180,
             "description": "Creates an Image with the appropiate load callback",
             "itemtype": "method",
             "name": "createImage",
@@ -604,7 +604,7 @@
         },
         {
             "file": "src/Pano.js",
-            "line": 183,
+            "line": 196,
             "itemtype": "method",
             "name": "composeFromTile",
             "params": [

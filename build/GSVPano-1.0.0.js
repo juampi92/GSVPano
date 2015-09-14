@@ -476,12 +476,6 @@ GSVPANO.PanoLoader = function(parameters) {
    *       $container.append(pano.canvas);
    *     });
    */
-  var handlePanoLoad = function(callback, pano) {
-    self.emit('panorama.load', pano);
-    if (callback) {
-      callback(pano);
-    }
-  };
 
   /**
    * @event error
@@ -538,6 +532,7 @@ GSVPANO.PanoLoader = function(parameters) {
     var self = this;
 
     _panoClient.getPanoramaByLocation(location, 50, function(result, status) {
+
       if (status === google.maps.StreetViewStatus.OK) {
 
         var pano = new GSVPANO.Pano({
@@ -549,11 +544,14 @@ GSVPANO.PanoLoader = function(parameters) {
             location: result.location,
             zoom: _zoom
           })
-          .on('complete', handlePanoLoad.bind(self, callback))
+          .on('complete', self.emit.bind(self, 'panorama.load'))
           .on('progress', setProgress.bind(self, pano));
 
         pano.compose();
         self.emit('panorama.data', pano);
+        if (callback) {
+          callback(pano);
+        }
       } else {
         self.emit('panorama.nodata', location, status);
         throwError('Could not retrieve panorama for the following reason: ' + status);
@@ -622,7 +620,6 @@ var Pano = function(params) {
    * @attribute rotation
    * @type {Number}
    */
-
   this.setRotation(params.rotation || 0);
   /**
    * @attribute pitch
@@ -648,7 +645,7 @@ var Pano = function(params) {
    * @attribute zoom
    * @type {Number}
    */
-  this.zoom = params.zoom;
+  this.zoom = parseInt(params.zoom);
   /**
    * @attribute canvas
    * @type {Canvas Element}
@@ -691,8 +688,6 @@ Pano.prototype.initCanvas = function() {
     h = (416 * Math.pow(2, this.zoom - 1));
   this.canvas.width = w;
   this.canvas.height = h;
-  // this._ctx.translate( this.canvas.width, 0 );
-  // this._ctx.scale( -1, 1 );
 };
 
 /**
@@ -727,9 +722,25 @@ Pano.prototype.initCanvas = function() {
 Pano.prototype.compose = function() {
   this.initCanvas();
 
-  var w = (this.zoom == 3) ? 7 : Math.pow(2, this.zoom),
+  var w,
     h = Math.pow(2, this.zoom - 1),
     url, x, y;
+
+  switch (this.zoom) {
+    case 5:
+      w = 26;
+      h = 13;
+      break;
+    case 4:
+      w = 13;
+      h = 7;
+      break;
+    case 3:
+      w = 7;
+      break;
+    default:
+      w = Math.pow(2, this.zoom);
+  }
 
   this._count = 0;
   this._total = w * h;
