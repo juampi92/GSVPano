@@ -18,7 +18,7 @@
         </a>
       </div>
       <p class="navbar-text">
-        API Docs for Version: <b>1.0.0</b>
+        API Docs for Version: <b>1.1.0</b>
       </p>
        <form class="navbar-form pull-right">
         <input type="text" class="form-control" placeholder="Search for classes/modules..." data-obj='["classes/EventEmitter", "classes/Pano", "classes/PanoLoader", "modules/EventEmitter", "modules/GSVPANO"]'>
@@ -99,12 +99,13 @@
                        * @extends {EventEmitter}
                        * @constructor
                        * @param  {Object} params
-                       * @param {Hash} params.panoId
+                       * @param {Hash} params.id
                        * @param {Number} params.rotation (on degrees)
                        * @param {Number} params.pitch
                        * @param {Google.Maps.LatLng} params.location
                        * @param {String} params.copyright
                        * @param {Date} params.imageDate
+                       * @param {Number} params.zoom
                        * @example
                        *         var pano = new GSVPANO.Pano({
                        *           id: panoId,

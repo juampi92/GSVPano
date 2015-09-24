@@ -18,7 +18,7 @@
         </a>
       </div>
       <p class="navbar-text">
-        API Docs for Version: <b>1.0.0</b>
+        API Docs for Version: <b>1.1.0</b>
       </p>
        <form class="navbar-form pull-right">
         <input type="text" class="form-control" placeholder="Search for classes/modules..." data-obj='["classes/EventEmitter", "classes/Pano", "classes/PanoLoader", "modules/EventEmitter", "modules/GSVPANO"]'>
@@ -154,6 +154,16 @@
                                                           </div>
                       
                                                       </li>
+                                                      <li class="param">
+                                                              <code class="param-name">autocompose</code>
+                                                              <span class="type">Number</span>
+                      
+                                                          <div class="param-description">
+                                                              <p>Compose automatically (default true)</p>
+                      
+                                                          </div>
+                      
+                                                      </li>
                                                   </ul>
                                           </li>
                                       </ul>
@@ -164,7 +174,7 @@
                                       <h4>Example:</h4>
                       
                                       <div class="example-content">
-                                          <pre class="code prettyprint"><code>  var loader = GSVPANO.PanoLoader({ zoom: 3 });</code></pre>
+                                          <pre class="code prettyprint"><code>  var loader = new GSVPANO.PanoLoader({ zoom: 3, autocompose: false });</code></pre>
                       
                                       </div>
                                   </div>
@@ -178,6 +188,7 @@
                       
                                   <li><a data-toggle="tab" href="#methods">Methods</a></li>
                                   <li><a data-toggle="tab" href="#properties">Properties</a></li>
+                                  <li><a data-toggle="tab" href="#attrs">Attributes</a></li>
                                   <li><a data-toggle="tab" href="#events">Events</a></li>
                           </ul>
                       
@@ -214,6 +225,12 @@
                                                   </a>
                                       </div>
                       
+                                      <div class="list-group attrs">
+                                          <div class="list-group-item list-group-item-danger">Attributes</div>
+                                                <a class="list-group-item" href="#" data-tabid="#attrs" data-anchor="#attr_autocompose" data-tablink="autocompose"><span class="glyphicon glyphicon-chevron-right"></span> autocompose</a>
+                                                <a class="list-group-item" href="#" data-tabid="#attrs" data-anchor="#attr_zoom" data-tablink="zoom"><span class="glyphicon glyphicon-chevron-right"></span> zoom</a>
+                                          </div>
+                                      </div>
                       
                                       <div class="index-section events">
                                           <div class="list-group-item list-group-item-success">Events</div>
@@ -262,7 +279,7 @@
                               <div class="meta">
                                           <p>
                                           Defined in
-                                  <a href="../files/src_GSVPano.js.html#l139"><code>src&#x2F;GSVPano.js:139</code></a>
+                                  <a href="../files/src_GSVPano.js.html#l146"><code>src&#x2F;GSVPano.js:146</code></a>
                                   </p>
                       
                               </div>
@@ -337,7 +354,7 @@
                               <div class="meta">
                                           <p>
                                           Defined in
-                                  <a href="../files/src_GSVPano.js.html#l115"><code>src&#x2F;GSVPano.js:115</code></a>
+                                  <a href="../files/src_GSVPano.js.html#l122"><code>src&#x2F;GSVPano.js:122</code></a>
                                   </p>
                       
                               </div>
@@ -391,7 +408,7 @@
                               <div class="meta">
                                           <p>
                                           Defined in
-                                  <a href="../files/src_GSVPano.js.html#l185"><code>src&#x2F;GSVPano.js:185</code></a>
+                                  <a href="../files/src_GSVPano.js.html#l195"><code>src&#x2F;GSVPano.js:195</code></a>
                                   </p>
                       
                               </div>
@@ -500,6 +517,70 @@
                                           
                                   </div>
                       
+                                  <div id="attrs" class="tab-pane">
+                                      <h2 class="off-left">Attributes</h2>
+                      
+                                          <div id="attr_autocompose" class="attr item">
+                                              <a name="config_autocompose"></a> 
+                                              <h3 class="name"><code>autocompose</code></h3>
+                                              <span class="type">Boolean</span>
+                                          
+                                          
+                                          
+                                          
+                                          
+                                          
+                                          
+                                          
+                                              <div class="meta">
+                                                          <p>
+                                                          Defined in
+                                                  <a href="../files/src_GSVPano.js.html#l65"><code>src&#x2F;GSVPano.js:65</code></a>
+                                                  </p>
+                                          
+                                          
+                                              </div>
+                                          
+                                              <div class="description">
+                                                  <p>Decides that when a Pano is added, it starts composing right away</p>
+                                          
+                                              </div>
+                                          
+                                                  <p><strong>Default:</strong> true</p>
+                                          
+                                          
+                                          </div>
+                                          <div id="attr_zoom" class="attr item private">
+                                              <a name="config_zoom"></a> 
+                                              <h3 class="name"><code>zoom</code></h3>
+                                              <span class="type">Number</span>
+                                          
+                                          
+                                                  <span class="flag private">private</span>
+                                          
+                                          
+                                          
+                                          
+                                          
+                                          
+                                              <div class="meta">
+                                                          <p>
+                                                          Defined in
+                                                  <a href="../files/src_GSVPano.js.html#l58"><code>src&#x2F;GSVPano.js:58</code></a>
+                                                  </p>
+                                          
+                                          
+                                              </div>
+                                          
+                                              <div class="description">
+                                                  
+                                              </div>
+                                          
+                                                  <p><strong>Default:</strong> 1</p>
+                                          
+                                          
+                                          </div>
+                                  </div>
                       
                                   <div id="events" class="tab-pane">
                                       <h2 class="off-left">Events</h2>
@@ -515,7 +596,7 @@
                                               <div class="meta">
                                                           <p>
                                                           Defined in
-                                                  <a href="../files/src_GSVPano.js.html#l103"><code>src&#x2F;GSVPano.js:103</code></a>
+                                                  <a href="../files/src_GSVPano.js.html#l110"><code>src&#x2F;GSVPano.js:110</code></a>
                                                   </p>
                                           
                                           
@@ -565,7 +646,7 @@
                                               <div class="meta">
                                                           <p>
                                                           Defined in
-                                                  <a href="../files/src_GSVPano.js.html#l67"><code>src&#x2F;GSVPano.js:67</code></a>
+                                                  <a href="../files/src_GSVPano.js.html#l74"><code>src&#x2F;GSVPano.js:74</code></a>
                                                   </p>
                                           
                                           
@@ -615,7 +696,7 @@
                                               <div class="meta">
                                                           <p>
                                                           Defined in
-                                                  <a href="../files/src_GSVPano.js.html#l94"><code>src&#x2F;GSVPano.js:94</code></a>
+                                                  <a href="../files/src_GSVPano.js.html#l101"><code>src&#x2F;GSVPano.js:101</code></a>
                                                   </p>
                                           
                                           
@@ -665,7 +746,7 @@
                                               <div class="meta">
                                                           <p>
                                                           Defined in
-                                                  <a href="../files/src_GSVPano.js.html#l76"><code>src&#x2F;GSVPano.js:76</code></a>
+                                                  <a href="../files/src_GSVPano.js.html#l83"><code>src&#x2F;GSVPano.js:83</code></a>
                                                   </p>
                                           
                                           
@@ -715,7 +796,7 @@
                                               <div class="meta">
                                                           <p>
                                                           Defined in
-                                                  <a href="../files/src_GSVPano.js.html#l82"><code>src&#x2F;GSVPano.js:82</code></a>
+                                                  <a href="../files/src_GSVPano.js.html#l89"><code>src&#x2F;GSVPano.js:89</code></a>
                                                   </p>
                                           
                                           

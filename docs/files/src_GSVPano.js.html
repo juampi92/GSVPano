@@ -18,7 +18,7 @@
         </a>
       </div>
       <p class="navbar-text">
-        API Docs for Version: <b>1.0.0</b>
+        API Docs for Version: <b>1.1.0</b>
       </p>
        <form class="navbar-form pull-right">
         <input type="text" class="form-control" placeholder="Search for classes/modules..." data-obj='["classes/EventEmitter", "classes/Pano", "classes/PanoLoader", "modules/EventEmitter", "modules/GSVPANO"]'>
@@ -129,157 +129,162 @@
                        * @constructor
                        * @param {Object} parameters
                        * @param {Number} parameters.zoom Zoom (default 1)
+                       * @param {Number} parameters.autocompose Compose automatically (default true)
                        * @example
-                       *       var loader = GSVPANO.PanoLoader({ zoom: 3 });
+                       *       var loader = new GSVPANO.PanoLoader({ zoom: 3, autocompose: false });
                        */
                       GSVPANO.PanoLoader = function(parameters) {
                         &#x27;use strict&#x27;;
                       
                         eventEmitter(this);
                       
-                        var self = this,
-                          _parameters = parameters || {},
-                          _location,
-                          _zoom,
-                          _panoId,
-                          _panoClient = new google.maps.StreetViewService(),
-                          _count = 0,
-                          _total = 0,
-                          _canvas = document.createElement(&#x27;canvas&#x27;),
-                          _ctx = _canvas.getContext(&#x27;2d&#x27;),
-                          rotation = 0,
-                          pitch = 0,
-                          copyright = &#x27;&#x27;;
+                        var _params = parameters || {};
+                      
+                        this._panoClient = new google.maps.StreetViewService();
                       
                         /**
-                         * @event panorama.data
-                         * @param {Pano} pano
-                         * @example
-                         *     loader.on(&#x27;panorama.data&#x27;, function(pano){
-                         *       console.log(&#x27;Pano &#x27; + pano.id + &#x27; added&#x27;);
-                         *     });
+                         * @attribute zoom
+                         * @type {Number}
+                         * @default 1
+                         * @private
                          */
-                      
+                        this.setZoom(_params.zoom || 1);
                         /**
-                         * @event panorama.nodata
-                         * @param {Google.Maps.LatLng} location
-                         * @param {Google.Maps.StreetViewStatus} status
+                         * Decides that when a Pano is added, it starts composing right away
+                         * @attribute autocompose
+                         * @type {Boolean}
+                         * @default true
                          */
+                        this.autocompose = (_params.autocompose === undefined) ? true : _params.autocompose;
+                      };
                       
-                        /**
-                         * @event panorama.progress
-                         * @param {Number} p
-                         * @param {Pano} pano
-                         * @example
-                         *         loader.on(&#x27;progress&#x27;, function(p, pano) {
-                         *           console.log(&#x27;Pano progress: &#x27; + p + &#x27;%&#x27;);
-                         *         });
-                         */
-                        var setProgress = function(pano, p) {
-                          self.emit(&#x27;panorama.progress&#x27;, p, pano);
+                      /**
+                       * @event panorama.data
+                       * @param {Pano} pano
+                       * @example
+                       *     loader.on(&#x27;panorama.data&#x27;, function(pano){
+                       *       console.log(&#x27;Pano &#x27; + pano.id + &#x27; added&#x27;);
+                       *     });
+                       */
+                      
+                      /**
+                       * @event panorama.nodata
+                       * @param {Google.Maps.LatLng} location
+                       * @param {Google.Maps.StreetViewStatus} status
+                       */
+                      
+                      /**
+                       * @event panorama.progress
+                       * @param {Number} p
+                       * @param {Pano} pano
+                       * @example
+                       *         loader.on(&#x27;progress&#x27;, function(p, pano) {
+                       *           console.log(&#x27;Pano progress: &#x27; + p + &#x27;%&#x27;);
+                       *         });
+                       */
+                      GSVPANO.PanoLoader.prototype._setProgress = function(pano, p) {
+                        this.emit(&#x27;panorama.progress&#x27;, p, pano);
+                      };
+                      /**
+                       * @event panorama.load
+                       * @param {Pano} pano
+                       * @example
+                       *     loader.on(&#x27;panorama.load&#x27;, function(pano){
+                       *       $container.append(pano.canvas);
+                       *     });
+                       */
+                      
+                      /**
+                       * @event error
+                       * @param {String} message
+                       * @example
+                       *     loader.on(&#x27;error&#x27;, function(message){
+                       *       console.log(message)
+                       *     });
+                       */
+                      GSVPANO.PanoLoader.prototype._hrowError = function(message) {
+                        this.emit(&#x27;error&#x27;, message);
+                      };
+                      
+                      /**
+                       * Middle function for working with IDs.
+                       * @method loadData
+                       * @param {Google.Maps.Location} location
+                       * @deprecated Disabled right now
+                       */
+                      /*this.loadData = function(location) {
+                        var self = this;
+                        var url;
+                      
+                        //url = &#x27;https://maps.google.com/cbk?output=json&amp;hl=x-local&amp;ll=&#x27; + location.lat() + &#x27;,&#x27; + location.lng() + &#x27;&amp;cb_client=maps_sv&amp;v=3&#x27;;
+                        url = GSVPANO._data_url + &#x27;&amp;ll=&#x27; + location.lat() + &#x27;,&#x27; + location.lng();
+                      
+                        var http_request = new XMLHttpRequest();
+                        http_request.open(&quot;GET&quot;, url, true);
+                        http_request.onreadystatechange = function() {
+                          if (http_request.readyState == 4 &amp;&amp; http_request.status == 200) {
+                            var data = JSON.parse(http_request.responseText);
+                            // self.loadPano(location, data.result[0].id);
+                          }
                         };
-                        /**
-                         * @event panorama.load
-                         * @param {Pano} pano
-                         * @example
-                         *     loader.on(&#x27;panorama.load&#x27;, function(pano){
-                         *       $container.append(pano.canvas);
-                         *     });
-                         */
+                        http_request.send(null);
+                      };*/
                       
-                        /**
-                         * @event error
-                         * @param {String} message
-                         * @example
-                         *     loader.on(&#x27;error&#x27;, function(message){
-                         *       console.log(message)
-                         *     });
-                         */
-                        var throwError = function(message) {
-                          self.emit(&#x27;error&#x27;, message);
-                        };
+                      /**
+                       * Fires panorama.data, panorama.nodata
+                       * @method load
+                       * @param {Google.Maps.Location} location
+                       * @param {Function} callback
+                       * @example
+                       *         // Let the panorama.load event handle it&#x27;s load
+                       *         loader.load(new google.maps.LatLng(lat, lng));
+                       * @example
+                       *         // Also handle the load individually
+                       *         loader.load(new google.maps.LatLng(lat, lng), function(pano){
+                       *           // This individual load has been completed
+                       *           container.append(pano.canvas);
+                       *         });
+                       */
+                      GSVPANO.PanoLoader.prototype.load = function(location, callback) {
+                        var self = this;
                       
-                        /**
-                         * Middle function for working with IDs.
-                         * @method loadData
-                         * @param {Google.Maps.Location} location
-                         * @deprecated Disabled right now
-                         */
-                        /*this.loadData = function(location) {
-                          var self = this;
-                          var url;
+                        this._panoClient.getPanoramaByLocation(location, 50, function(result, status) {
                       
-                          //url = &#x27;https://maps.google.com/cbk?output=json&amp;hl=x-local&amp;ll=&#x27; + location.lat() + &#x27;,&#x27; + location.lng() + &#x27;&amp;cb_client=maps_sv&amp;v=3&#x27;;
-                          url = GSVPANO._data_url + &#x27;&amp;ll=&#x27; + location.lat() + &#x27;,&#x27; + location.lng();
+                          if (status === google.maps.StreetViewStatus.OK) {
                       
-                          var http_request = new XMLHttpRequest();
-                          http_request.open(&quot;GET&quot;, url, true);
-                          http_request.onreadystatechange = function() {
-                            if (http_request.readyState == 4 &amp;&amp; http_request.status == 200) {
-                              var data = JSON.parse(http_request.responseText);
-                              // self.loadPano(location, data.result[0].id);
-                            }
-                          };
-                          http_request.send(null);
-                        };*/
+                            var pano = new GSVPANO.Pano({
+                                id: result.location.pano,
+                                rotation: result.tiles.centerHeading,
+                                pitch: result.tiles.originPitch,
+                                copyright: result.copyright,
+                                imageDate: result.imageDate,
+                                location: result.location,
+                                zoom: self.zoom
+                              })
+                              .on(&#x27;complete&#x27;, self.emit.bind(self, &#x27;panorama.load&#x27;))
+                              .on(&#x27;progress&#x27;, self._setProgress.bind(self, pano));
                       
-                        /**
-                         * Fires panorama.data, panorama.nodata
-                         * @method load
-                         * @param {Google.Maps.Location} location
-                         * @param {Function} callback
-                         * @example
-                         *         // Let the panorama.load event handle it&#x27;s load
-                         *         loader.load(new google.maps.LatLng(lat, lng));
-                         * @example
-                         *         // Also handle the load individually
-                         *         loader.load(new google.maps.LatLng(lat, lng), function(pano){
-                         *           // This individual load has been completed
-                         *           container.append(pano.canvas);
-                         *         });
-                         */
-                        this.load = function(location, callback) {
-                          var self = this;
-                      
-                          _panoClient.getPanoramaByLocation(location, 50, function(result, status) {
-                      
-                            if (status === google.maps.StreetViewStatus.OK) {
-                      
-                              var pano = new GSVPANO.Pano({
-                                  id: result.location.pano,
-                                  rotation: result.tiles.centerHeading,
-                                  pitch: result.tiles.originPitch,
-                                  copyright: result.copyright,
-                                  imageDate: result.imageDate,
-                                  location: result.location,
-                                  zoom: _zoom
-                                })
-                                .on(&#x27;complete&#x27;, self.emit.bind(self, &#x27;panorama.load&#x27;))
-                                .on(&#x27;progress&#x27;, setProgress.bind(self, pano));
-                      
+                            if (self.autocompose) {
                               pano.compose();
-                              self.emit(&#x27;panorama.data&#x27;, pano);
-                              if (callback) {
-                                callback(pano);
-                              }
-                            } else {
-                              self.emit(&#x27;panorama.nodata&#x27;, location, status);
-                              throwError(&#x27;Could not retrieve panorama for the following reason: &#x27; + status);
                             }
-                          });
-                        };
+                            self.emit(&#x27;panorama.data&#x27;, pano);
                       
-                        /**
-                         * @method setZoom
-                         * @param {Number} z
-                         */
-                        this.setZoom = function(z) {
-                          _zoom = z;
-                        };
+                            if (callback) {
+                              callback(pano);
+                            }
+                          } else {
+                            self.emit(&#x27;panorama.nodata&#x27;, location, status);
+                            self._throwError(&#x27;Could not retrieve panorama for the following reason: &#x27; + status);
+                          }
+                        });
+                      };
                       
-                        // Default zoom.
-                        this.setZoom(_parameters.zoom || 1);
-                      
+                      /**
+                       * @method setZoom
+                       * @param {Number} z
+                       */
+                      GSVPANO.PanoLoader.prototype.setZoom = function(z) {
+                        this.zoom = z;
                       };
                       
                       global.GSVPANO = module.exports = GSVPANO;
