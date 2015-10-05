@@ -2,7 +2,7 @@
     "project": {
         "name": "GSVPano",
         "description": "Google Street View Panorama Util",
-        "version": "1.1.0",
+        "version": "1.2.0",
         "url": "https://juampi92.github.io/GSVPano"
     },
     "files": {
@@ -112,6 +112,11 @@
                         {
                             "name": "autocompose",
                             "description": "Compose automatically (default true)",
+                            "type": "Number"
+                        },
+                        {
+                            "name": "radius",
+                            "description": "Google getPanoramaByLocation radius parameter (default 50)",
                             "type": "Number"
                         }
                     ]
@@ -257,7 +262,7 @@
         },
         {
             "file": "src/GSVPano.js",
-            "line": 58,
+            "line": 59,
             "itemtype": "attribute",
             "name": "zoom",
             "type": "{Number}",
@@ -269,7 +274,7 @@
         },
         {
             "file": "src/GSVPano.js",
-            "line": 65,
+            "line": 66,
             "description": "Decides that when a Pano is added, it starts composing right away",
             "itemtype": "attribute",
             "name": "autocompose",
@@ -280,7 +285,18 @@
         },
         {
             "file": "src/GSVPano.js",
-            "line": 74,
+            "line": 73,
+            "description": "Google getPanoramaByLocation radius parameter",
+            "itemtype": "attribute",
+            "name": "radius",
+            "type": "{Number}",
+            "default": "50",
+            "class": "PanoLoader",
+            "module": "GSVPANO"
+        },
+        {
+            "file": "src/GSVPano.js",
+            "line": 82,
             "itemtype": "event",
             "name": "panorama.data",
             "params": [
@@ -298,7 +314,7 @@
         },
         {
             "file": "src/GSVPano.js",
-            "line": 83,
+            "line": 91,
             "itemtype": "event",
             "name": "panorama.nodata",
             "params": [
@@ -318,7 +334,7 @@
         },
         {
             "file": "src/GSVPano.js",
-            "line": 89,
+            "line": 97,
             "itemtype": "event",
             "name": "panorama.progress",
             "params": [
@@ -341,7 +357,7 @@
         },
         {
             "file": "src/GSVPano.js",
-            "line": 101,
+            "line": 109,
             "itemtype": "event",
             "name": "panorama.load",
             "params": [
@@ -359,7 +375,7 @@
         },
         {
             "file": "src/GSVPano.js",
-            "line": 110,
+            "line": 118,
             "itemtype": "event",
             "name": "error",
             "params": [
@@ -377,7 +393,7 @@
         },
         {
             "file": "src/GSVPano.js",
-            "line": 122,
+            "line": 130,
             "description": "Middle function for working with IDs.",
             "itemtype": "method",
             "name": "loadData",
@@ -395,7 +411,7 @@
         },
         {
             "file": "src/GSVPano.js",
-            "line": 146,
+            "line": 154,
             "description": "Fires panorama.data, panorama.nodata",
             "itemtype": "method",
             "name": "load",
@@ -420,7 +436,7 @@
         },
         {
             "file": "src/GSVPano.js",
-            "line": 195,
+            "line": 203,
             "itemtype": "method",
             "name": "setZoom",
             "params": [
@@ -659,6 +675,15 @@
             ],
             "access": "private",
             "tagname": "",
+            "class": "Pano",
+            "module": "GSVPANO"
+        },
+        {
+            "file": "src/Pano.js",
+            "line": 226,
+            "description": "Cancels the load of the Pano (the images may keep loading)",
+            "itemtype": "method",
+            "name": "cancel",
             "class": "Pano",
             "module": "GSVPANO"
         }
